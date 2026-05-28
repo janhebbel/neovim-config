@@ -56,6 +56,8 @@ vim.filetype.add({
 })
 
 vim.opt.makeprg = "cmd /c .\\build.bat"
+vim.opt.grepprg = "rg --vimgrep --smart-case"
+vim.opt.grepformat = "%f:%l:%c:%m"
 
 vim.pack.add({ "https://github.com/nvim-lua/plenary.nvim" })
 vim.pack.add({ "https://github.com/nvim-telescope/telescope.nvim" })
@@ -165,6 +167,8 @@ vim.api.nvim_create_user_command("Fd", builtin.find_files, {})
 vim.api.nvim_create_user_command("Fg", builtin.live_grep, {})
 vim.api.nvim_create_user_command("Fo", builtin.buffers, {})
 vim.api.nvim_create_user_command("Fs", builtin.current_buffer_fuzzy_find, {})
+
+vim.opt.path:append("**")
 
 vim.cmd("let c_no_curly_error = 1")
 

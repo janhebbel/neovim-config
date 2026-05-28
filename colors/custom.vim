@@ -31,3 +31,8 @@ hi Statusline   guifg=#090909 guibg=#507765 gui=bold
 hi StatuslineNC guifg=#d0d0d0 guibg=#404040
 hi VertSplit    guifg=#404040 guibg=#404040
 hi WinSeparator guifg=#404040
+
+" Quickfix
+hi QuickFixLine guifg=NONE guibg=#0d2533
+hi qfFileName   guifg=#72ab90
+hi qfLineNr     guifg=#9bc0c4
