@@ -9,16 +9,14 @@ vim.o.relativenumber = false
 vim.o.mouse = 'a'
 
 vim.opt.termguicolors = true
-
-vim.opt.termguicolors = true
 vim.opt.guicursor = {
     "n-v-c:block-Cursor",
-    "i-ci-ve:ver25-InsertCursor",
+    "i-ci-ve:ver20-iCursor",
     "r-cr:hor20-Cursor",
     "o:hor50-Cursor"
 }
 
-vim.o.guifont = "Cousine:h12"
+vim.o.guifont = "Droid Sans Mono:h12"
 vim.g.neovide_scroll_animation_length = 0
 vim.g.neovide_cursor_animation_length = 0
 
@@ -44,7 +42,7 @@ vim.opt.showbreak = "" -- "↪ "
 vim.o.textwidth=0
 vim.o.colorcolumn=""--"81"
 
-vim.o.cursorline = true
+vim.o.cursorline = false
 
 vim.o.undofile = true
 
@@ -63,6 +61,7 @@ vim.pack.add({ "https://github.com/nvim-lua/plenary.nvim" })
 vim.pack.add({ "https://github.com/nvim-telescope/telescope.nvim" })
 vim.pack.add({ "https://github.com/nvim-telescope/telescope-fzf-native.nvim" })
 vim.pack.add({ "https://github.com/bfrg/vim-c-cpp-modern" })
+vim.pack.add({ "https://github.com/rluba/jai.vim" })
 
 local builtin = require("telescope.builtin")
 local actions = require("telescope.actions")
@@ -146,6 +145,7 @@ vim.keymap.set('n', '<M-l>', '<C-w>l')
 vim.keymap.set('n', '<M-v>', '<C-w>v')
 vim.keymap.set('n', '<M-s>', '<C-w>s')
 vim.keymap.set('n', '<M-c>', '<C-w>c')
+vim.keymap.set('n', '<M-o>', '<C-w>o')
 
 vim.keymap.set('n', '<M-g>', builtin.live_grep)
 vim.keymap.set('n', '<M-f>', builtin.find_files)
@@ -163,6 +163,8 @@ vim.keymap.set('n', '<C-n>', ':cnext<CR>')
 
 vim.api.nvim_create_user_command("Fd", builtin.find_files, {})
 vim.api.nvim_create_user_command("Fg", builtin.live_grep, {})
+vim.api.nvim_create_user_command("Fo", builtin.buffers, {})
+vim.api.nvim_create_user_command("Fs", builtin.current_buffer_fuzzy_find, {})
 
 vim.cmd("let c_no_curly_error = 1")
 
@@ -178,6 +180,22 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end,
 })
 
-vim.o.background = "dark"
-vim.cmd("colorscheme slate")
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "jai",
+    callback = function()
+        vim.b.jai_indent_options = {
+            case_labels = 0,
+        }
+    end,
+})
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "morning",
+    callback = function()
+        vim.api.nvim_set_hl(0, "Constant", { fg = "#ff00ff", bg = "#e4e4e4" })
+        vim.api.nvim_set_hl(0, "Visual", { bg = "#c0c0c0" })
+    end,
+})
+
+vim.cmd("colorscheme custom")
 
