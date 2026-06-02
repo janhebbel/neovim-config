@@ -16,9 +16,12 @@ vim.opt.guicursor = {
     "o:hor50-Cursor"
 }
 
-vim.o.guifont = "Droid Sans Mono:h12"
-vim.g.neovide_scroll_animation_length = 0
-vim.g.neovide_cursor_animation_length = 0
+if vim.g.neovide == true then
+    vim.o.guifont = "Cousine:h13.5"
+    vim.g.neovide_scroll_animation_length = 0
+    vim.g.neovide_cursor_animation_length = 0
+    vim.api.nvim_set_keymap('n', '<F11>', ":let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", {})
+end
 
 vim.o.expandtab = true
 vim.o.shiftwidth = 4
