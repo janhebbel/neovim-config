@@ -204,5 +204,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end,
 })
 
-vim.cmd("colorscheme custom")
+vim.cmd("set background=light")
+vim.cmd("colorscheme custom2")
 
