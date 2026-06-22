@@ -76,66 +76,46 @@ vim.pack.add({ "https://github.com/nvim-telescope/telescope-fzf-native.nvim" })
 vim.pack.add({ "https://github.com/bfrg/vim-c-cpp-modern" })
 vim.pack.add({ "https://github.com/rluba/jai.vim" })
 
-local builtin = require("telescope.builtin")
-local actions = require("telescope.actions")
+local ok, telescope = pcall(require, "telescope")
 
-require("telescope").setup({
-    defaults = {
-        mappings = {
-            i = {
-                ["<C-t>"] = actions.select_tab,
-                ["<C-s>"] = actions.select_horizontal,
-                ["<C-v>"] = actions.select_vertical,
-            },
-            n = {
-                ["<C-t>"] = actions.select_tab,
-                ["<C-s>"] = actions.select_horizontal,
-                ["<C-v>"] = actions.select_vertical,
+if ok then
+
+    local builtin = require("telescope.builtin")
+    local actions = require("telescope.actions")
+
+    telescope.setup({
+        defaults = {
+            mappings = {
+                i = {
+                    ["<C-t>"] = actions.select_tab,
+                    ["<C-s>"] = actions.select_horizontal,
+                    ["<C-v>"] = actions.select_vertical,
+                },
+                n = {
+                    ["<C-t>"] = actions.select_tab,
+                    ["<C-s>"] = actions.select_horizontal,
+                    ["<C-v>"] = actions.select_vertical,
+                },
             },
         },
-    },
-})
+    })
 
-require("telescope").load_extension("fzf")
+    vim.keymap.set('n', '<M-g>', builtin.live_grep)
+    vim.keymap.set('n', '<M-f>', builtin.find_files)
 
--- vim.api.nvim_create_autocmd("FileType", {
---     pattern = "*",
---     callback = function()
---         pcall(vim.treesitter.start)
---     end,
--- })
+    vim.keymap.set('n', '<leader>fd', builtin.find_files)
+    vim.keymap.set('n', '<leader>fg', builtin.live_grep)
+    vim.keymap.set('n', '<leader>fo', builtin.buffers)
+    vim.keymap.set('n', '<leader>fs', builtin.current_buffer_fuzzy_find)
 
--- vim.lsp.enable("clangd")
--- vim.lsp.config("clangd", {
---     cmd = {
---         "clangd",
---         "--background-index",
---     },
---     handlers = {
---         ["textDocument/publishDiagnostics"] = function() end,
---     },
--- })
+    vim.api.nvim_create_user_command("Fd", builtin.find_files, {})
+    vim.api.nvim_create_user_command("Fg", builtin.live_grep, {})
+    vim.api.nvim_create_user_command("Fo", builtin.buffers, {})
+    vim.api.nvim_create_user_command("Fs", builtin.current_buffer_fuzzy_find, {})
 
--- vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help)
--- vim.keymap.set('n', 'gd', vim.lsp.buf.definition)
+    telescope.load_extension("fzf")
 
--- require('vague').setup({
---     transparent = false, -- If true, background is not set
---     bold = false, -- Disable bold globally
---     italic = false, -- Disable italic globally
--- })
-
--- require("gruvbox").setup({
---     bold = false,
---     italic = {
---         strings = false,
---         emphasis = false,
---         comments = false,
---         operators = false,
---         folds = false,
---     },
---     -- italic = false,
--- })
+end
 
 vim.keymap.set('n', '0', 'g0')
 vim.keymap.set('n', '$', 'g$')
@@ -160,41 +140,13 @@ vim.keymap.set('n', '<M-s>', '<C-w>s')
 vim.keymap.set('n', '<M-c>', '<C-w>c')
 vim.keymap.set('n', '<M-o>', '<C-w>o')
 
-vim.keymap.set('n', '<M-g>', builtin.live_grep)
-vim.keymap.set('n', '<M-f>', builtin.find_files)
-
-vim.keymap.set('n', '<leader>fd', builtin.find_files)
-vim.keymap.set('n', '<leader>fg', builtin.live_grep)
-vim.keymap.set('n', '<leader>fo', builtin.buffers)
-vim.keymap.set('n', '<leader>fs', builtin.current_buffer_fuzzy_find)
-
 vim.keymap.set('n', '<C-S-b>', ':make!<CR>')
 vim.keymap.set('n', '<leader>co', ':copen<CR>')
 vim.keymap.set('n', '<leader>cc', ':cclose<CR>')
 vim.keymap.set('n', '<C-p>', ':cprev<CR>')
 vim.keymap.set('n', '<C-n>', ':cnext<CR>')
 
-vim.api.nvim_create_user_command("Fd", builtin.find_files, {})
-vim.api.nvim_create_user_command("Fg", builtin.live_grep, {})
-vim.api.nvim_create_user_command("Fo", builtin.buffers, {})
-vim.api.nvim_create_user_command("Fs", builtin.current_buffer_fuzzy_find, {})
 vim.api.nvim_create_user_command("Build", ":make!<CR>", {})
-
-vim.opt.path:append("**")
-
-vim.cmd("let c_no_curly_error = 1")
-
-vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "slate",
-    callback = function()
-        vim.api.nvim_set_hl(0, "Comment", { fg = "#b0b0b0" })
-        vim.api.nvim_set_hl(0, "Cursor", { bg = "#00ff00" })
-        vim.api.nvim_set_hl(0, "InsertCursor", { bg = "#ff0000" })
-        vim.api.nvim_set_hl(0, "MatchParen", { bg = "#406045" })
-        vim.api.nvim_set_hl(0, "CursorLine", { bg = "#202f60" })
-        vim.api.nvim_set_hl(0, "Structure", { fg = "#7ded45" })
-    end,
-})
 
 vim.api.nvim_create_autocmd("FileType", {
     pattern = "jai",
@@ -205,14 +157,9 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
-vim.api.nvim_create_autocmd("ColorScheme", {
-    pattern = "morning",
-    callback = function()
-        vim.api.nvim_set_hl(0, "Constant", { fg = "#ff00ff", bg = "#e4e4e4" })
-        vim.api.nvim_set_hl(0, "Visual", { bg = "#c0c0c0" })
-    end,
-})
+vim.opt.path:append("**")
 
+vim.cmd("let c_no_curly_error = 1")
 vim.cmd("set background=dark")
 vim.cmd("colorscheme custom4")
 
