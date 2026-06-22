@@ -1,7 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.o.showmode = false
+vim.o.showmode = true
 
 vim.o.number = false
 vim.o.relativenumber = false
@@ -12,15 +12,21 @@ vim.opt.termguicolors = true
 vim.opt.guicursor = {
     "n-v-c:block-Cursor",
     "i-ci-ve:ver20-iCursor",
+    -- "i-ci-ve:block-iCursor",
     "r-cr:hor20-Cursor",
     "o:hor50-Cursor"
 }
 
 if vim.g.neovide == true then
-    vim.o.guifont = "Cousine:h13.5"
+    vim.o.guifont = "JetBrains Mono NL:h14"
     vim.g.neovide_scroll_animation_length = 0
     vim.g.neovide_cursor_animation_length = 0
-    vim.api.nvim_set_keymap('n', '<F11>', ":let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", {})
+    vim.api.nvim_set_keymap("n", "<F11>", ":let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", {})
+    -- vim.api.nvim_set_keymap({"n", "v"}, "<C-+>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>", {})
+    -- vim.api.nvim_set_keymap({"n", "v"}, "<C-->", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>", {})
+    -- vim.api.nvim_set_keymap({"n", "v"}, "<C-0>", ":lua vim.g.neovide_scale_factor = 1<CR>", {})
+    -- vim.keymap.set({ "n", "v" }, "<C-ScrollWheelUp>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor + 0.1<CR>")
+    -- vim.keymap.set({ "n", "v" }, "<C-ScrollWheelDown>", ":lua vim.g.neovide_scale_factor = vim.g.neovide_scale_factor - 0.1<CR>")
 end
 
 vim.o.expandtab = true
@@ -49,7 +55,9 @@ vim.o.cursorline = false
 
 vim.o.undofile = true
 
-vim.o.scrolloff = 10
+vim.o.scrolloff=0
+vim.o.scrolljump=-50
+
 vim.o.clipboard = 'unnamedplus'
 
 vim.filetype.add({
@@ -170,6 +178,7 @@ vim.api.nvim_create_user_command("Fd", builtin.find_files, {})
 vim.api.nvim_create_user_command("Fg", builtin.live_grep, {})
 vim.api.nvim_create_user_command("Fo", builtin.buffers, {})
 vim.api.nvim_create_user_command("Fs", builtin.current_buffer_fuzzy_find, {})
+vim.api.nvim_create_user_command("Build", ":make!<CR>", {})
 
 vim.opt.path:append("**")
 
@@ -204,6 +213,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
     end,
 })
 
-vim.cmd("set background=light")
-vim.cmd("colorscheme custom2")
+vim.cmd("set background=dark")
+vim.cmd("colorscheme custom4")
 
