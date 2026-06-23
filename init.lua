@@ -158,6 +158,11 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 vim.opt.path:append("**")
+vim.opt.wildignore:append({
+    "bin/*", "binary/*",
+    "lib/*", "library/*",
+    "*.pdb", "*.obj", "*.exe", "*.out", "*.lib", "*.dll", "*.so", "*.a", "*.o",
+})
 
 vim.cmd("let c_no_curly_error = 1")
 vim.cmd("set background=dark")
