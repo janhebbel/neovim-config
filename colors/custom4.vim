@@ -17,11 +17,11 @@ hi! link cOperator Statement
 hi Normal       guifg=#e0e0e0 guibg=#000000
 hi Visual       guifg=NONE guibg=#4d4d4d
 hi Comment      guifg=#808080
-hi Statement    guifg=#de7e9b gui=NONE
+hi Statement    guifg=#e8c88e gui=NONE
 hi Function     guifg=#caa6e0
 hi Constant     guifg=#a7b5d6
 hi String       guifg=#a7b5d6
-hi Special      guifg=#8ca3ed
+hi Special      guifg=#a7cfc1
 hi Type         guifg=#a6bdf5
 hi CursorLine   guibg=#212121
 hi Cursor       guifg=#000000 guibg=#1f9cf0
