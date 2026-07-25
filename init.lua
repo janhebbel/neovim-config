@@ -18,7 +18,7 @@ vim.opt.guicursor = {
 }
 
 if vim.g.neovide == true then
-    vim.o.guifont = "JetBrains Mono NL:h14"
+    vim.o.guifont = "Liberation Mono:h16"
     vim.g.neovide_scroll_animation_length = 0
     vim.g.neovide_cursor_animation_length = 0
     vim.api.nvim_set_keymap("n", "<F11>", ":let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", {})
@@ -33,7 +33,11 @@ vim.o.expandtab = true
 vim.o.shiftwidth = 4
 vim.o.softtabstop = vim.o.shiftwidth
 vim.o.tabstop = vim.o.shiftwidth
-vim.o.cindent = false
+
+vim.cmd("set noautoindent")
+vim.cmd("set nosmartindent")
+vim.cmd("set nocindent")
+
 vim.o.cinoptions = ":0,E-s"
 
 vim.o.ignorecase = true
@@ -75,6 +79,7 @@ vim.pack.add({ "https://github.com/nvim-telescope/telescope.nvim" })
 vim.pack.add({ "https://github.com/nvim-telescope/telescope-fzf-native.nvim" })
 vim.pack.add({ "https://github.com/bfrg/vim-c-cpp-modern" })
 vim.pack.add({ "https://github.com/rluba/jai.vim" })
+vim.pack.add({ "https://github.com/rebelot/kanagawa.nvim" })
 
 local ok, telescope = pcall(require, "telescope")
 
@@ -139,6 +144,7 @@ vim.keymap.set('n', '<M-v>', '<C-w>v')
 vim.keymap.set('n', '<M-s>', '<C-w>s')
 vim.keymap.set('n', '<M-c>', '<C-w>c')
 vim.keymap.set('n', '<M-o>', '<C-w>o')
+vim.keymap.set('n', '<M-,>', '<cmd>b#<CR>')
 
 vim.keymap.set('n', '<C-S-b>', ':make!<CR>')
 vim.keymap.set('n', '<leader>co', ':copen<CR>')
@@ -165,6 +171,6 @@ vim.opt.wildignore:append({
 })
 
 vim.cmd("let c_no_curly_error = 1")
-vim.cmd("set background=dark")
-vim.cmd("colorscheme custom4")
+vim.cmd("set background=light")
+vim.cmd("colorscheme default")
 

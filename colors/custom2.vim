@@ -6,8 +6,6 @@ endif
 
 let g:colors_name = "custom2"
 
-set background=light
-
 " hi! link Function Normal
 hi! link @variable Normal
 
