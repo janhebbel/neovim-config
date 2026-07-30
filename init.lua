@@ -3,8 +3,8 @@ vim.g.maplocalleader = ' '
 
 vim.o.showmode = true
 
-vim.o.number = false
-vim.o.relativenumber = false
+vim.o.number = true
+vim.o.relativenumber = true
 
 vim.o.mouse = 'a'
 
@@ -18,7 +18,7 @@ vim.opt.guicursor = {
 }
 
 if vim.g.neovide == true then
-    vim.o.guifont = "Liberation Mono:h16"
+    vim.o.guifont = "Droid Sans Mono:h14"
     vim.g.neovide_scroll_animation_length = 0
     vim.g.neovide_cursor_animation_length = 0
     vim.api.nvim_set_keymap("n", "<F11>", ":let g:neovide_fullscreen = !g:neovide_fullscreen<CR>", {})
@@ -46,7 +46,7 @@ vim.o.smartcase = true
 vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 
-vim.o.wrap = true
+vim.o.wrap = false
 vim.o.linebreak = true
 vim.o.breakindent = false
 vim.opt.breakindentopt = { "shift:" .. vim.o.shiftwidth }
@@ -122,8 +122,8 @@ if ok then
 
 end
 
-vim.keymap.set('n', '0', 'g0')
-vim.keymap.set('n', '$', 'g$')
+-- vim.keymap.set('n', '0', 'g0')
+-- vim.keymap.set('n', '$', 'g$')
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
@@ -170,7 +170,21 @@ vim.opt.wildignore:append({
     "*.pdb", "*.obj", "*.exe", "*.out", "*.lib", "*.dll", "*.so", "*.a", "*.o",
 })
 
+-- Nuke italic everywhere.
+vim.api.nvim_create_autocmd("ColorScheme", {
+    pattern = "*",
+    callback = function()
+        for _, group in ipairs(vim.fn.getcompletion("", "highlight")) do
+            local hl = vim.api.nvim_get_hl(0, { name = group, link = false })
+            if hl.italic then
+                hl.italic = false
+                vim.api.nvim_set_hl(0, group, hl)
+            end
+        end
+    end,
+})
+
 vim.cmd("let c_no_curly_error = 1")
-vim.cmd("set background=light")
-vim.cmd("colorscheme default")
+vim.cmd("set background=dark")
+vim.cmd("colorscheme kanagawa-dragon")
 
